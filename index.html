@@ -145,6 +145,22 @@ extras.set('Gravy (from granules)', new Map([
   [10,'Heat a pan of water to a gentle simmer, or if using a steamer for vegetables then use the steamer base. Add gravy granules and stir until the required thickness is achieved.'],
   [5,'Add the juices from the meat roasting dish to the gravy.']
 ]));
+  extras.set('Creamy Leeks', new Map([
+  [10, 'In a nonstick skillet, melt butter over medium heat. Add leeks and water, season with salt and pepper, cover, and reduce heat to low, cooking until leeks are soft—10 minutes. Stir in cream and parmesan, and serve.']
+]));
+extras.set('Brussels Sprouts, Bacon, and Chestnuts', new Map([
+  [50, 'Bring a large pan of salted water to the boil, then tip in trimmed brussels sprouts. Once back to the boil, cook for 5 minutes. Drain and run under cold water until cold.'],
+  [40, 'Heat a frying pan, add chopped smoked streaky bacon, and fry gently until crisp and golden. Remove bacon, leaving fat behind. Add chestnuts to the pan and fry until tinged.'],
+  [10, 'Add sprouts to the pan with a splash of water, cover, and cook over medium heat until tender. Add butter, then sauté. Mix in bacon and chestnuts, season, and serve.']
+]));
+extras.set('Cauliflower Cheese', new Map([
+  [45, 'Bring a large saucepan of water to the boil, add cauliflower pieces, and cook for 5 minutes. Drain and place in an ovenproof dish.'],
+  [30, 'Heat milk, flour, and butter in a saucepan, whisking as it boils. Stir in grated cheddar cheese. Pour over cauliflower, top with more cheese and breadcrumbs, and bake at 220°C/425°F until bubbling.']
+]));
+extras.set('Braised Red Cabbage', new Map([
+  [90, 'Quarter the red cabbage, remove the core, and finely shred. Add to a large pan with red onion, brown sugar, cider vinegar, red wine, butter, and cinnamon. Simmer covered for 1.5 hours.'],
+  [30, 'Remove the lid and continue cooking until tender.']
+]));
 
 var custom = new Map();
 
@@ -385,6 +401,27 @@ function formatCustom(c) {
     };
     return html;
 }
+
+// Add toggle for Fahrenheit and Celsius
+function toggleTemperature() {
+  const toggle = document.createElement('label');
+  toggle.innerHTML = '<input type="checkbox" id="tempToggle"/> Show in Fahrenheit';
+  document.body.prepend(toggle);
+  document.getElementById('tempToggle').addEventListener('change', (e) => {
+    const isFahrenheit = e.target.checked;
+    document.querySelectorAll('.timetd').forEach(td => {
+      const text = td.innerHTML;
+      const match = text.match(/(\d+)°C/);
+      if (match) {
+        const celsius = parseInt(match[1]);
+        const fahrenheit = Math.round((celsius * 9/5) + 32);
+        td.innerHTML = text.replace(/\d+°C/, `${isFahrenheit ? fahrenheit : celsius}°${isFahrenheit ? 'F' : 'C'}`);
+      }
+    });
+  });
+}
+
+toggleTemperature();
 
 </script>
 
